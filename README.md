@@ -59,3 +59,6 @@ appreciate if you opened an [issue](https://github.com/naiveai/rat/issues/new)
 about it. Pull requests are also greatly appreciated, though make sure to
 *explicitly* specify that you agree to have your contribution released into the
 public domain.
+
+By contributing, you agree to adhere to the
+[Code of Conduct](CODE_OF_CONDUCT.md).
