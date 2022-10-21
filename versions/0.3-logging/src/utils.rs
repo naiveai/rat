@@ -117,17 +117,21 @@ const ANSI_RESET: &str = "[0m";
 /// Wrap a piece of text in ANSI escape codes in order to format it.
 pub fn terminal_format(text: &str, formatting: TerminalFormatting) -> String {
     let color_code = match formatting.color {
-        Some(Color::Red) => "[31m",
-        Some(Color::Green) => "[32m",
-        Some(Color::Yellow) => "[33m",
-        None => "",
+        Some(Color::Red) => format!("{ANSI_ESCAPE}[31m"),
+        Some(Color::Green) => format!("{ANSI_ESCAPE}[32m"),
+        Some(Color::Yellow) => format!("{ANSI_ESCAPE}[33m"),
+        None => "".to_string(),
     };
 
-    let highlighting = if formatting.bold { "[1m" } else { "" };
+    let highlighting = if formatting.bold {
+        format!("{ANSI_ESCAPE}[1m")
+    } else {
+        "".to_string()
+    };
 
     format!(
-        "{ANSI_ESCAPE}{color_code}\
-        {ANSI_ESCAPE}{highlighting}\
+        "{color_code}\
+        {highlighting}\
         {text}\
         {ANSI_ESCAPE}{ANSI_RESET}"
     )
