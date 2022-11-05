@@ -64,11 +64,14 @@ pub fn hash_directory(
     // We could generalize these methods in theory, but for simplicity purposes
     // we are not going to do that.
 
-    let dir_entries = fs::read_dir(&directory)?;
+    let dir_entries = fs::read_dir(&directory)?
+        .collect::<Result<Vec<_>, _>>()?;
 
-    for dir_entry_result in dir_entries {
-        let dir_entry = dir_entry_result?;
+    // Directory entries have no guaranteed order, so in order to be able to
+    // hash the same files consistently, we need to sort them first.
+    dir_entries.sort_by_key(|entry| entry.file_name());
 
+    for dir_entry in dir_entries {
         let entry_name = dir_entry.file_name();
 
         if ignore
