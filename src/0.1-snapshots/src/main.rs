@@ -1,6 +1,5 @@
-use std::{env, io};
-use std::error::Error;
 use std::fs;
+use std::{env, io};
 
 mod utils;
 
@@ -10,31 +9,25 @@ mod utils;
 // git stores is nothing magical, it's all just files stored in a directory.
 const RAT_NEST: &str = ".rat";
 
-// We're going to be using Box<dyn Error> to make some aspects of error handling
-// less explicit for simplicity. It allows us to use any type that implements
-// the Error trait as an error, including types known only at runtime thanks
-// to "dyn". In an completely idiomatic application, you would likely create
-// custom error types that you bubble up to the surface and then report in a
-// user-friendly way.
-fn main() -> Result<(), Box<dyn Error>> {
+fn main() -> Result<(), RatError> {
     let command_line_arguments: Vec<String> = env::args().collect();
 
     let subcommand = command_line_arguments
         .get(1)
-        .ok_or_else(|| "No command provided.".to_string())?;
+        .ok_or(RatError::NoSubcommand)?;
 
     let output = match subcommand.as_str() {
         "init" => {
             init()?;
 
             "Initialized new rat nest.".to_string()
-        },
+        }
         "commit" => {
             let number = commit()?;
-            
+
             format!("Created commit number {number}.")
         }
-        _ => Err("Invalid subcommand.")?
+        _ => Err(RatError::InvalidSubcommand)?,
     };
 
     println!("{}", output);
@@ -42,6 +35,25 @@ fn main() -> Result<(), Box<dyn Error>> {
     // We need to explicitly return an empty Ok here, since our return value is
     // a Result, not a plain "void".
     Ok(())
+}
+#[derive(Debug)]
+enum RatError {
+    NoSubcommand,
+    InvalidSubcommand,
+    FileError(io::Error),
+    CommitError(RatCommitError),
+}
+
+impl From<io::Error> for RatError {
+    fn from(error: io::Error) -> Self {
+        Self::FileError(error)
+    }
+}
+
+impl From<RatCommitError> for RatError {
+    fn from(error: RatCommitError) -> Self {
+        Self::CommitError(error)
+    }
 }
 
 /// Initializes a new rat nest in the current directory.
@@ -53,14 +65,16 @@ fn init() -> Result<(), io::Error> {
 }
 
 /// Commits the contents of the current directory to the nest.
-fn commit() -> Result<i32, Box<dyn Error>> {
+fn commit() -> Result<i32, RatCommitError> {
     let head_file = format!("{RAT_NEST}/HEAD");
 
     // Read and parse the current HEAD file, containing a reference to the last
     // commit. The `parse` method on `String` has many possible outputs, so we
     // must clarify which one we need with an explicit type annotation.
     let head_string = fs::read_to_string(&head_file)?;
-    let head_number: i32 = head_string.parse()?;
+    let head_number: i32 = head_string
+        .parse()
+        .map_err(|_| RatCommitError::InvalidHead)?;
 
     let new_head_number = head_number + 1;
 
@@ -76,4 +90,16 @@ fn commit() -> Result<i32, Box<dyn Error>> {
     fs::write(head_file, new_head_number.to_string())?;
 
     Ok(new_head_number)
+}
+
+#[derive(Debug)]
+enum RatCommitError {
+    FileError(io::Error),
+    InvalidHead,
+}
+
+impl From<io::Error> for RatCommitError {
+    fn from(error: io::Error) -> Self {
+        Self::FileError(error)
+    }
 }
