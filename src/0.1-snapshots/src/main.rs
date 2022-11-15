@@ -3,19 +3,21 @@ use std::{env, io};
 
 mod utils;
 
-// Akin to the hidden .git directory, this is the directory where rat will store
-// the history of the nest. The real .git directory is a bit more complicated
-// than we're going to make it, but the concept is the same - everything that
-// git stores is nothing magical, it's all just files stored in a directory.
+// ANCHOR: nest_directory
 const RAT_NEST: &str = ".rat";
+// ANCHOR_END: nest_directory
 
+// ANCHOR: main
 fn main() -> Result<(), RatError> {
+    // ANCHOR: main_subcommands
     let command_line_arguments: Vec<String> = env::args().collect();
 
     let subcommand = command_line_arguments
         .get(1)
         .ok_or(RatError::NoSubcommand)?;
+    // ANCHOR_END: main_subcommands
 
+    // ANCHOR: subcommand_match
     let output = match subcommand.as_str() {
         "init" => {
             init()?;
@@ -27,8 +29,12 @@ fn main() -> Result<(), RatError> {
 
             format!("Created commit number {number}.")
         }
+        // An Err value followed by ? is effectively equivalent to an early
+        // return, it simply more closely mirrors other error handling logic by
+        // having a ?
         _ => Err(RatError::InvalidSubcommand)?,
     };
+    // ANCHOR_END: subcommand_match
 
     println!("{}", output);
 
@@ -36,6 +42,8 @@ fn main() -> Result<(), RatError> {
     // a Result, not a plain "void".
     Ok(())
 }
+// ANCHOR_END: main
+
 #[derive(Debug)]
 enum RatError {
     NoSubcommand,
@@ -56,6 +64,7 @@ impl From<RatCommitError> for RatError {
     }
 }
 
+// ANCHOR: init
 /// Initializes a new rat nest in the current directory.
 fn init() -> Result<(), io::Error> {
     fs::create_dir(RAT_NEST)?;
@@ -63,9 +72,11 @@ fn init() -> Result<(), io::Error> {
 
     Ok(())
 }
+// ANCHOR_END: init
 
 /// Commits the contents of the current directory to the nest.
 fn commit() -> Result<i32, RatCommitError> {
+    // ANCHOR: commit_head_parse
     let head_file = format!("{RAT_NEST}/HEAD");
 
     // Read and parse the current HEAD file, containing a reference to the last
@@ -77,7 +88,9 @@ fn commit() -> Result<i32, RatCommitError> {
         .map_err(|_| RatCommitError::InvalidHead)?;
 
     let new_head_number = head_number + 1;
+    // ANCHOR_END: commit_head_parse
 
+    // ANCHOR: commit_creation
     // Create a new directory for our new commit inside the nest.
     let commit_dir = format!("{RAT_NEST}/commit-{new_head_number}");
     fs::create_dir(&commit_dir)?;
@@ -88,6 +101,7 @@ fn commit() -> Result<i32, RatCommitError> {
 
     // Update the HEAD file with the new commit that we just created.
     fs::write(head_file, new_head_number.to_string())?;
+    // ANCHOR_END: commit_creation
 
     Ok(new_head_number)
 }
