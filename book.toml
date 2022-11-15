@@ -9,6 +9,7 @@ title = "Rat"
 default-theme = "navy"
 git-repository-url = "https://github.com/naiveai/rat"
 edit-url-template = "https://github.com/naiveai/rat/edit/main/{path}"
+curly-quotes = true
 
 [output.html.playground]
 runnable = false
