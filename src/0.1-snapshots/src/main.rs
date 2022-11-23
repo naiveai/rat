@@ -1,3 +1,5 @@
+use std::error::Error;
+use std::fmt::Display;
 use std::fs;
 use std::{env, io};
 
@@ -50,6 +52,27 @@ enum RatError {
     InvalidSubcommand,
     FileError(io::Error),
     CommitError(RatCommitError),
+}
+
+impl Display for RatError {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            Self::NoSubcommand => write!(f, "No subcommand provided."),
+            Self::InvalidSubcommand => write!(f, "Invalid subcommand."),
+            Self::FileError(e) => write!(f, "File error: {e}"),
+            Self::CommitError(e) => write!(f, "Commit error: {e}"),
+        }
+    }
+}
+
+impl Error for RatError {
+    fn source(&self) -> Option<&(dyn Error + 'static)> {
+        match self {
+            Self::FileError(e) => Some(e),
+            Self::CommitError(e) => Some(e),
+            _ => None,
+        }
+    }
 }
 
 impl From<io::Error> for RatError {
@@ -110,6 +133,24 @@ fn commit() -> Result<i32, RatCommitError> {
 enum RatCommitError {
     FileError(io::Error),
     InvalidHead,
+}
+
+impl Display for RatCommitError {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            Self::FileError(e) => write!(f, "File error: {e}"),
+            Self::InvalidHead => write!(f, "Couldn't parse invalid HEAD file."),
+        }
+    }
+}
+
+impl Error for RatCommitError {
+    fn source(&self) -> Option<&(dyn Error + 'static)> {
+        match self {
+            Self::FileError(e) => Some(e),
+            _ => None,
+        }
+    }
 }
 
 impl From<io::Error> for RatCommitError {
