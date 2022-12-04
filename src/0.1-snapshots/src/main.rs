@@ -57,10 +57,10 @@ enum RatError {
 impl Display for RatError {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            Self::NoSubcommand => write!(f, "No subcommand provided."),
-            Self::InvalidSubcommand => write!(f, "Invalid subcommand."),
-            Self::FileError(e) => write!(f, "File error: {e}"),
-            Self::CommitError(e) => write!(f, "Commit error: {e}"),
+            Self::NoSubcommand => write!(f, "no subcommand provided"),
+            Self::InvalidSubcommand => write!(f, "invalid subcommand"),
+            Self::FileError(e) => write!(f, "file error: {e}"),
+            Self::CommitError(e) => write!(f, "commit error: {e}"),
         }
     }
 }
@@ -138,8 +138,8 @@ enum RatCommitError {
 impl Display for RatCommitError {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            Self::FileError(e) => write!(f, "File error: {e}"),
-            Self::InvalidHead => write!(f, "Couldn't parse invalid HEAD file."),
+            Self::FileError(e) => write!(f, "file error: {e}"),
+            Self::InvalidHead => write!(f, "couldn't parse invalid HEAD file"),
         }
     }
 }
