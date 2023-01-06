@@ -130,20 +130,20 @@ fn log() -> Result<String, Box<dyn Error>> {
 
     for commit_num in (0..=current_head).rev() {
         // This is the header, which is simply the commit number itself
-        logs.push_str(&utils::terminal_format(
-            &format!("commit {commit_num}\n"),
-            utils::TerminalFormatting {
-                color: Some(utils::Color::Yellow),
-                bold: true
-            }
-        ));
+        logs.push_str(&format!("commit {commit_num}\n\n"));
 
         // We retrieve the message string from the .message file
         let message = fs::read_to_string(format!("{RAT_NEST}/commit-{commit_num}/.message"))?;
 
-        // We append the message to our logs
-        logs.push_str(&message);
+        // for each line
+        // prepend 4 spaces to that line
+        let indented_message = message
+            .lines()
+            .map(|s| format!("    {s}\n"))
+            .collect::<String>();
 
+        // We append the message to our logs
+        logs.push_str(&indented_message);
 
         // We check this condition down here because we don't want these
         // separators to be printed after the last commit.
