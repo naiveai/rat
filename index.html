@@ -1,0 +1,1103 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js navy">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Version 0.1: Snapshots - Rat</title>
+        <!-- Custom HTML head -->
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "navy";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('navy')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="0.1-snapshots/index.html" class="active"><strong aria-hidden="true">1.</strong> Version 0.1: Snapshots</a></li><li class="chapter-item expanded "><a href="0.2-hashes/index.html"><strong aria-hidden="true">2.</strong> Version 0.2: Hashes</a></li><li class="chapter-item expanded "><div><strong aria-hidden="true">3.</strong> Version 0.3: Logging</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">4.</strong> Version 0.4: Branching</div></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Rat</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/naiveai/rat" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        <a href="https://github.com/naiveai/rat/edit/main/src/0.1-snapshots/README.md" title="Suggest an edit" aria-label="Suggest an edit">
+                            <i id="git-edit-button" class="fa fa-edit"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="naive-snapshot-type-commits"><a class="header" href="#naive-snapshot-type-commits">Naive snapshot-type commits</a></h1>
+<p>The fundamental motivation behind a version control system is to keep track
+of changes to a file or set of files so you can look back at or revert to old
+versions, and collaborate on them systematically.</p>
+<p>The most basic way to implement a VCS is something we’ve all likely done,
+whether knowingly or unknowingly, which is to create copies of file(s) at
+points where we might need to access them again, renaming them to reflect their
+version, like <code>thesis_draft_1</code>, <code>thesis_draft_2</code>, etc, with <code>thesis</code> itself
+being the file with work still in progress. In git terminology, each of these
+versions is called a commit, and the in-progress version is called the working
+file, or the working directory if it’s multiple files.</p>
+<p>We can make a hidden folder called <code>.rat</code> that stores our past commits. This
+is analogous to the <code>.git</code> directory you’ll have seen inside a git repository
+if you run <code>ls -a</code> inside of it. We’ll store that name in a constant.</p>
+<pre><code class="language-rust"><span class="boring">use std::error::Error;
+</span><span class="boring">use std::fmt::Display;
+</span><span class="boring">use std::fs;
+</span><span class="boring">use std::{env, io};
+</span><span class="boring">
+</span><span class="boring">mod utils;
+</span><span class="boring">
+</span>const RAT_NEST: &amp;str = &quot;.rat&quot;;
+<span class="boring">
+</span><span class="boring">fn main() -&gt; Result&lt;(), RatError&gt; {
+</span><span class="boring">    let command_line_arguments: Vec&lt;String&gt; = env::args().collect();
+</span><span class="boring">
+</span><span class="boring">    let subcommand = command_line_arguments
+</span><span class="boring">        .get(1)
+</span><span class="boring">        .ok_or(RatError::NoSubcommand)?;
+</span><span class="boring">
+</span><span class="boring">    let output = match subcommand.as_str() {
+</span><span class="boring">        &quot;init&quot; =&gt; {
+</span><span class="boring">            init()?;
+</span><span class="boring">
+</span><span class="boring">            &quot;Initialized new rat nest.&quot;.to_string()
+</span><span class="boring">        }
+</span><span class="boring">        &quot;commit&quot; =&gt; {
+</span><span class="boring">            let number = commit()?;
+</span><span class="boring">
+</span><span class="boring">            format!(&quot;Created commit number {number}.&quot;)
+</span><span class="boring">        }
+</span><span class="boring">        // An Err value followed by ? is effectively equivalent to an early
+</span><span class="boring">        // return, it simply more closely mirrors other error handling logic by
+</span><span class="boring">        // having a ?
+</span><span class="boring">        _ =&gt; Err(RatError::InvalidSubcommand)?,
+</span><span class="boring">    };
+</span><span class="boring">
+</span><span class="boring">    println!(&quot;{}&quot;, output);
+</span><span class="boring">
+</span><span class="boring">    // We need to explicitly return an empty Ok here, since our return value is
+</span><span class="boring">    // a Result, not a plain &quot;void&quot;.
+</span><span class="boring">    Ok(())
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">#[derive(Debug)]
+</span><span class="boring">enum RatError {
+</span><span class="boring">    NoSubcommand,
+</span><span class="boring">    InvalidSubcommand,
+</span><span class="boring">    FileError(io::Error),
+</span><span class="boring">    CommitError(RatCommitError),
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">impl Display for RatError {
+</span><span class="boring">    fn fmt(&amp;self, f: &amp;mut std::fmt::Formatter&lt;'_&gt;) -&gt; std::fmt::Result {
+</span><span class="boring">        match self {
+</span><span class="boring">            Self::NoSubcommand =&gt; write!(f, &quot;no subcommand provided&quot;),
+</span><span class="boring">            Self::InvalidSubcommand =&gt; write!(f, &quot;invalid subcommand&quot;),
+</span><span class="boring">            Self::FileError(e) =&gt; write!(f, &quot;file error: {e}&quot;),
+</span><span class="boring">            Self::CommitError(e) =&gt; write!(f, &quot;commit error: {e}&quot;),
+</span><span class="boring">        }
+</span><span class="boring">    }
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">impl Error for RatError {
+</span><span class="boring">    fn source(&amp;self) -&gt; Option&lt;&amp;(dyn Error + 'static)&gt; {
+</span><span class="boring">        match self {
+</span><span class="boring">            Self::FileError(e) =&gt; Some(e),
+</span><span class="boring">            Self::CommitError(e) =&gt; Some(e),
+</span><span class="boring">            _ =&gt; None,
+</span><span class="boring">        }
+</span><span class="boring">    }
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">impl From&lt;io::Error&gt; for RatError {
+</span><span class="boring">    fn from(error: io::Error) -&gt; Self {
+</span><span class="boring">        Self::FileError(error)
+</span><span class="boring">    }
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">impl From&lt;RatCommitError&gt; for RatError {
+</span><span class="boring">    fn from(error: RatCommitError) -&gt; Self {
+</span><span class="boring">        Self::CommitError(error)
+</span><span class="boring">    }
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">/// Initializes a new rat nest in the current directory.
+</span><span class="boring">fn init() -&gt; Result&lt;(), io::Error&gt; {
+</span><span class="boring">    fs::create_dir(RAT_NEST)?;
+</span><span class="boring">    fs::write(format!(&quot;{RAT_NEST}/HEAD&quot;), &quot;-1&quot;)?;
+</span><span class="boring">
+</span><span class="boring">    Ok(())
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">/// Commits the contents of the current directory to the nest.
+</span><span class="boring">fn commit() -&gt; Result&lt;i32, RatCommitError&gt; {
+</span><span class="boring">    let head_file = format!(&quot;{RAT_NEST}/HEAD&quot;);
+</span><span class="boring">
+</span><span class="boring">    // Read and parse the current HEAD file, containing a reference to the last
+</span><span class="boring">    // commit. The `parse` method on `String` has many possible outputs, so we
+</span><span class="boring">    // must clarify which one we need with an explicit type annotation.
+</span><span class="boring">    let head_string = fs::read_to_string(&amp;head_file)?;
+</span><span class="boring">    let head_number: i32 = head_string
+</span><span class="boring">        .parse()
+</span><span class="boring">        .map_err(|_| RatCommitError::InvalidHead)?;
+</span><span class="boring">
+</span><span class="boring">    let new_head_number = head_number + 1;
+</span><span class="boring">
+</span><span class="boring">    // Create a new directory for our new commit inside the nest.
+</span><span class="boring">    let commit_dir = format!(&quot;{RAT_NEST}/commit-{new_head_number}&quot;);
+</span><span class="boring">    fs::create_dir(&amp;commit_dir)?;
+</span><span class="boring">
+</span><span class="boring">    // Copy the current working directory into the commit directory, ignoring
+</span><span class="boring">    // the nest itself.
+</span><span class="boring">    utils::copy_dir_deep(env::current_dir()?, &amp;commit_dir, &amp;[RAT_NEST])?;
+</span><span class="boring">
+</span><span class="boring">    // Update the HEAD file with the new commit that we just created.
+</span><span class="boring">    fs::write(head_file, new_head_number.to_string())?;
+</span><span class="boring">
+</span><span class="boring">    Ok(new_head_number)
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">#[derive(Debug)]
+</span><span class="boring">enum RatCommitError {
+</span><span class="boring">    FileError(io::Error),
+</span><span class="boring">    InvalidHead,
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">impl Display for RatCommitError {
+</span><span class="boring">    fn fmt(&amp;self, f: &amp;mut std::fmt::Formatter&lt;'_&gt;) -&gt; std::fmt::Result {
+</span><span class="boring">        match self {
+</span><span class="boring">            Self::FileError(e) =&gt; write!(f, &quot;file error: {e}&quot;),
+</span><span class="boring">            Self::InvalidHead =&gt; write!(f, &quot;couldn't parse invalid HEAD file&quot;),
+</span><span class="boring">        }
+</span><span class="boring">    }
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">impl Error for RatCommitError {
+</span><span class="boring">    fn source(&amp;self) -&gt; Option&lt;&amp;(dyn Error + 'static)&gt; {
+</span><span class="boring">        match self {
+</span><span class="boring">            Self::FileError(e) =&gt; Some(e),
+</span><span class="boring">            _ =&gt; None,
+</span><span class="boring">        }
+</span><span class="boring">    }
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">impl From&lt;io::Error&gt; for RatCommitError {
+</span><span class="boring">    fn from(error: io::Error) -&gt; Self {
+</span><span class="boring">        Self::FileError(error)
+</span><span class="boring">    }
+</span><span class="boring">}
+</span></code></pre>
+<h2 id="basics"><a class="header" href="#basics">Basics</a></h2>
+<p>In our main function, we set up the basic structure of our program. Eventually,
+we’ll be adding many different commands, but for now we need to able to do two
+things: <code>init</code> to initialize a new nest, and create a new <code>commit</code>. We’ll
+first use <a href="https://doc.rust-lang.org/std/env/fn.args.html"><code>std::env::args</code></a> to retrieve our command line arguments
+and find out what subcommand we need to run.</p>
+<pre><code class="language-rust"><span class="boring">use std::error::Error;
+</span><span class="boring">use std::fmt::Display;
+</span><span class="boring">use std::fs;
+</span><span class="boring">use std::{env, io};
+</span><span class="boring">
+</span><span class="boring">mod utils;
+</span><span class="boring">
+</span><span class="boring">const RAT_NEST: &amp;str = &quot;.rat&quot;;
+</span><span class="boring">
+</span><span class="boring">fn main() -&gt; Result&lt;(), RatError&gt; {
+</span>    let command_line_arguments: Vec&lt;String&gt; = env::args().collect();
+
+    let subcommand = command_line_arguments
+        .get(1)
+        .ok_or(RatError::NoSubcommand)?;
+<span class="boring">
+</span><span class="boring">    let output = match subcommand.as_str() {
+</span><span class="boring">        &quot;init&quot; =&gt; {
+</span><span class="boring">            init()?;
+</span><span class="boring">
+</span><span class="boring">            &quot;Initialized new rat nest.&quot;.to_string()
+</span><span class="boring">        }
+</span><span class="boring">        &quot;commit&quot; =&gt; {
+</span><span class="boring">            let number = commit()?;
+</span><span class="boring">
+</span><span class="boring">            format!(&quot;Created commit number {number}.&quot;)
+</span><span class="boring">        }
+</span><span class="boring">        // An Err value followed by ? is effectively equivalent to an early
+</span><span class="boring">        // return, it simply more closely mirrors other error handling logic by
+</span><span class="boring">        // having a ?
+</span><span class="boring">        _ =&gt; Err(RatError::InvalidSubcommand)?,
+</span><span class="boring">    };
+</span><span class="boring">
+</span><span class="boring">    println!(&quot;{}&quot;, output);
+</span><span class="boring">
+</span><span class="boring">    // We need to explicitly return an empty Ok here, since our return value is
+</span><span class="boring">    // a Result, not a plain &quot;void&quot;.
+</span><span class="boring">    Ok(())
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">#[derive(Debug)]
+</span><span class="boring">enum RatError {
+</span><span class="boring">    NoSubcommand,
+</span><span class="boring">    InvalidSubcommand,
+</span><span class="boring">    FileError(io::Error),
+</span><span class="boring">    CommitError(RatCommitError),
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">impl Display for RatError {
+</span><span class="boring">    fn fmt(&amp;self, f: &amp;mut std::fmt::Formatter&lt;'_&gt;) -&gt; std::fmt::Result {
+</span><span class="boring">        match self {
+</span><span class="boring">            Self::NoSubcommand =&gt; write!(f, &quot;no subcommand provided&quot;),
+</span><span class="boring">            Self::InvalidSubcommand =&gt; write!(f, &quot;invalid subcommand&quot;),
+</span><span class="boring">            Self::FileError(e) =&gt; write!(f, &quot;file error: {e}&quot;),
+</span><span class="boring">            Self::CommitError(e) =&gt; write!(f, &quot;commit error: {e}&quot;),
+</span><span class="boring">        }
+</span><span class="boring">    }
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">impl Error for RatError {
+</span><span class="boring">    fn source(&amp;self) -&gt; Option&lt;&amp;(dyn Error + 'static)&gt; {
+</span><span class="boring">        match self {
+</span><span class="boring">            Self::FileError(e) =&gt; Some(e),
+</span><span class="boring">            Self::CommitError(e) =&gt; Some(e),
+</span><span class="boring">            _ =&gt; None,
+</span><span class="boring">        }
+</span><span class="boring">    }
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">impl From&lt;io::Error&gt; for RatError {
+</span><span class="boring">    fn from(error: io::Error) -&gt; Self {
+</span><span class="boring">        Self::FileError(error)
+</span><span class="boring">    }
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">impl From&lt;RatCommitError&gt; for RatError {
+</span><span class="boring">    fn from(error: RatCommitError) -&gt; Self {
+</span><span class="boring">        Self::CommitError(error)
+</span><span class="boring">    }
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">/// Initializes a new rat nest in the current directory.
+</span><span class="boring">fn init() -&gt; Result&lt;(), io::Error&gt; {
+</span><span class="boring">    fs::create_dir(RAT_NEST)?;
+</span><span class="boring">    fs::write(format!(&quot;{RAT_NEST}/HEAD&quot;), &quot;-1&quot;)?;
+</span><span class="boring">
+</span><span class="boring">    Ok(())
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">/// Commits the contents of the current directory to the nest.
+</span><span class="boring">fn commit() -&gt; Result&lt;i32, RatCommitError&gt; {
+</span><span class="boring">    let head_file = format!(&quot;{RAT_NEST}/HEAD&quot;);
+</span><span class="boring">
+</span><span class="boring">    // Read and parse the current HEAD file, containing a reference to the last
+</span><span class="boring">    // commit. The `parse` method on `String` has many possible outputs, so we
+</span><span class="boring">    // must clarify which one we need with an explicit type annotation.
+</span><span class="boring">    let head_string = fs::read_to_string(&amp;head_file)?;
+</span><span class="boring">    let head_number: i32 = head_string
+</span><span class="boring">        .parse()
+</span><span class="boring">        .map_err(|_| RatCommitError::InvalidHead)?;
+</span><span class="boring">
+</span><span class="boring">    let new_head_number = head_number + 1;
+</span><span class="boring">
+</span><span class="boring">    // Create a new directory for our new commit inside the nest.
+</span><span class="boring">    let commit_dir = format!(&quot;{RAT_NEST}/commit-{new_head_number}&quot;);
+</span><span class="boring">    fs::create_dir(&amp;commit_dir)?;
+</span><span class="boring">
+</span><span class="boring">    // Copy the current working directory into the commit directory, ignoring
+</span><span class="boring">    // the nest itself.
+</span><span class="boring">    utils::copy_dir_deep(env::current_dir()?, &amp;commit_dir, &amp;[RAT_NEST])?;
+</span><span class="boring">
+</span><span class="boring">    // Update the HEAD file with the new commit that we just created.
+</span><span class="boring">    fs::write(head_file, new_head_number.to_string())?;
+</span><span class="boring">
+</span><span class="boring">    Ok(new_head_number)
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">#[derive(Debug)]
+</span><span class="boring">enum RatCommitError {
+</span><span class="boring">    FileError(io::Error),
+</span><span class="boring">    InvalidHead,
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">impl Display for RatCommitError {
+</span><span class="boring">    fn fmt(&amp;self, f: &amp;mut std::fmt::Formatter&lt;'_&gt;) -&gt; std::fmt::Result {
+</span><span class="boring">        match self {
+</span><span class="boring">            Self::FileError(e) =&gt; write!(f, &quot;file error: {e}&quot;),
+</span><span class="boring">            Self::InvalidHead =&gt; write!(f, &quot;couldn't parse invalid HEAD file&quot;),
+</span><span class="boring">        }
+</span><span class="boring">    }
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">impl Error for RatCommitError {
+</span><span class="boring">    fn source(&amp;self) -&gt; Option&lt;&amp;(dyn Error + 'static)&gt; {
+</span><span class="boring">        match self {
+</span><span class="boring">            Self::FileError(e) =&gt; Some(e),
+</span><span class="boring">            _ =&gt; None,
+</span><span class="boring">        }
+</span><span class="boring">    }
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">impl From&lt;io::Error&gt; for RatCommitError {
+</span><span class="boring">    fn from(error: io::Error) -&gt; Self {
+</span><span class="boring">        Self::FileError(error)
+</span><span class="boring">    }
+</span><span class="boring">}
+</span></code></pre>
+<p>Then we can match on the resulting subcommand to decide which function to run.</p>
+<pre><code class="language-rust"><span class="boring">use std::error::Error;
+</span><span class="boring">use std::fmt::Display;
+</span><span class="boring">use std::fs;
+</span><span class="boring">use std::{env, io};
+</span><span class="boring">
+</span><span class="boring">mod utils;
+</span><span class="boring">
+</span><span class="boring">const RAT_NEST: &amp;str = &quot;.rat&quot;;
+</span><span class="boring">
+</span><span class="boring">fn main() -&gt; Result&lt;(), RatError&gt; {
+</span><span class="boring">    let command_line_arguments: Vec&lt;String&gt; = env::args().collect();
+</span><span class="boring">
+</span><span class="boring">    let subcommand = command_line_arguments
+</span><span class="boring">        .get(1)
+</span><span class="boring">        .ok_or(RatError::NoSubcommand)?;
+</span><span class="boring">
+</span>    let output = match subcommand.as_str() {
+        &quot;init&quot; =&gt; {
+            init()?;
+
+            &quot;Initialized new rat nest.&quot;.to_string()
+        }
+        &quot;commit&quot; =&gt; {
+            let number = commit()?;
+
+            format!(&quot;Created commit number {number}.&quot;)
+        }
+        // An Err value followed by ? is effectively equivalent to an early
+        // return, it simply more closely mirrors other error handling logic by
+        // having a ?
+        _ =&gt; Err(RatError::InvalidSubcommand)?,
+    };
+<span class="boring">
+</span><span class="boring">    println!(&quot;{}&quot;, output);
+</span><span class="boring">
+</span><span class="boring">    // We need to explicitly return an empty Ok here, since our return value is
+</span><span class="boring">    // a Result, not a plain &quot;void&quot;.
+</span><span class="boring">    Ok(())
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">#[derive(Debug)]
+</span><span class="boring">enum RatError {
+</span><span class="boring">    NoSubcommand,
+</span><span class="boring">    InvalidSubcommand,
+</span><span class="boring">    FileError(io::Error),
+</span><span class="boring">    CommitError(RatCommitError),
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">impl Display for RatError {
+</span><span class="boring">    fn fmt(&amp;self, f: &amp;mut std::fmt::Formatter&lt;'_&gt;) -&gt; std::fmt::Result {
+</span><span class="boring">        match self {
+</span><span class="boring">            Self::NoSubcommand =&gt; write!(f, &quot;no subcommand provided&quot;),
+</span><span class="boring">            Self::InvalidSubcommand =&gt; write!(f, &quot;invalid subcommand&quot;),
+</span><span class="boring">            Self::FileError(e) =&gt; write!(f, &quot;file error: {e}&quot;),
+</span><span class="boring">            Self::CommitError(e) =&gt; write!(f, &quot;commit error: {e}&quot;),
+</span><span class="boring">        }
+</span><span class="boring">    }
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">impl Error for RatError {
+</span><span class="boring">    fn source(&amp;self) -&gt; Option&lt;&amp;(dyn Error + 'static)&gt; {
+</span><span class="boring">        match self {
+</span><span class="boring">            Self::FileError(e) =&gt; Some(e),
+</span><span class="boring">            Self::CommitError(e) =&gt; Some(e),
+</span><span class="boring">            _ =&gt; None,
+</span><span class="boring">        }
+</span><span class="boring">    }
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">impl From&lt;io::Error&gt; for RatError {
+</span><span class="boring">    fn from(error: io::Error) -&gt; Self {
+</span><span class="boring">        Self::FileError(error)
+</span><span class="boring">    }
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">impl From&lt;RatCommitError&gt; for RatError {
+</span><span class="boring">    fn from(error: RatCommitError) -&gt; Self {
+</span><span class="boring">        Self::CommitError(error)
+</span><span class="boring">    }
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">/// Initializes a new rat nest in the current directory.
+</span><span class="boring">fn init() -&gt; Result&lt;(), io::Error&gt; {
+</span><span class="boring">    fs::create_dir(RAT_NEST)?;
+</span><span class="boring">    fs::write(format!(&quot;{RAT_NEST}/HEAD&quot;), &quot;-1&quot;)?;
+</span><span class="boring">
+</span><span class="boring">    Ok(())
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">/// Commits the contents of the current directory to the nest.
+</span><span class="boring">fn commit() -&gt; Result&lt;i32, RatCommitError&gt; {
+</span><span class="boring">    let head_file = format!(&quot;{RAT_NEST}/HEAD&quot;);
+</span><span class="boring">
+</span><span class="boring">    // Read and parse the current HEAD file, containing a reference to the last
+</span><span class="boring">    // commit. The `parse` method on `String` has many possible outputs, so we
+</span><span class="boring">    // must clarify which one we need with an explicit type annotation.
+</span><span class="boring">    let head_string = fs::read_to_string(&amp;head_file)?;
+</span><span class="boring">    let head_number: i32 = head_string
+</span><span class="boring">        .parse()
+</span><span class="boring">        .map_err(|_| RatCommitError::InvalidHead)?;
+</span><span class="boring">
+</span><span class="boring">    let new_head_number = head_number + 1;
+</span><span class="boring">
+</span><span class="boring">    // Create a new directory for our new commit inside the nest.
+</span><span class="boring">    let commit_dir = format!(&quot;{RAT_NEST}/commit-{new_head_number}&quot;);
+</span><span class="boring">    fs::create_dir(&amp;commit_dir)?;
+</span><span class="boring">
+</span><span class="boring">    // Copy the current working directory into the commit directory, ignoring
+</span><span class="boring">    // the nest itself.
+</span><span class="boring">    utils::copy_dir_deep(env::current_dir()?, &amp;commit_dir, &amp;[RAT_NEST])?;
+</span><span class="boring">
+</span><span class="boring">    // Update the HEAD file with the new commit that we just created.
+</span><span class="boring">    fs::write(head_file, new_head_number.to_string())?;
+</span><span class="boring">
+</span><span class="boring">    Ok(new_head_number)
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">#[derive(Debug)]
+</span><span class="boring">enum RatCommitError {
+</span><span class="boring">    FileError(io::Error),
+</span><span class="boring">    InvalidHead,
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">impl Display for RatCommitError {
+</span><span class="boring">    fn fmt(&amp;self, f: &amp;mut std::fmt::Formatter&lt;'_&gt;) -&gt; std::fmt::Result {
+</span><span class="boring">        match self {
+</span><span class="boring">            Self::FileError(e) =&gt; write!(f, &quot;file error: {e}&quot;),
+</span><span class="boring">            Self::InvalidHead =&gt; write!(f, &quot;couldn't parse invalid HEAD file&quot;),
+</span><span class="boring">        }
+</span><span class="boring">    }
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">impl Error for RatCommitError {
+</span><span class="boring">    fn source(&amp;self) -&gt; Option&lt;&amp;(dyn Error + 'static)&gt; {
+</span><span class="boring">        match self {
+</span><span class="boring">            Self::FileError(e) =&gt; Some(e),
+</span><span class="boring">            _ =&gt; None,
+</span><span class="boring">        }
+</span><span class="boring">    }
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">impl From&lt;io::Error&gt; for RatCommitError {
+</span><span class="boring">    fn from(error: io::Error) -&gt; Self {
+</span><span class="boring">        Self::FileError(error)
+</span><span class="boring">    }
+</span><span class="boring">}
+</span></code></pre>
+<h2 id="commit"><a class="header" href="#commit">Commit</a></h2>
+<p>Let’s write <code>commit</code> first, since it’s the most fundamental unit. In order to
+make a commit, we just need to copy the current contents of the working
+directory into a special commit folder inside our nest.</p>
+<pre><code class="language-rust"><span class="boring">use std::error::Error;
+</span><span class="boring">use std::fmt::Display;
+</span><span class="boring">use std::fs;
+</span><span class="boring">use std::{env, io};
+</span><span class="boring">
+</span><span class="boring">mod utils;
+</span><span class="boring">
+</span><span class="boring">const RAT_NEST: &amp;str = &quot;.rat&quot;;
+</span><span class="boring">
+</span><span class="boring">fn main() -&gt; Result&lt;(), RatError&gt; {
+</span><span class="boring">    let command_line_arguments: Vec&lt;String&gt; = env::args().collect();
+</span><span class="boring">
+</span><span class="boring">    let subcommand = command_line_arguments
+</span><span class="boring">        .get(1)
+</span><span class="boring">        .ok_or(RatError::NoSubcommand)?;
+</span><span class="boring">
+</span><span class="boring">    let output = match subcommand.as_str() {
+</span><span class="boring">        &quot;init&quot; =&gt; {
+</span><span class="boring">            init()?;
+</span><span class="boring">
+</span><span class="boring">            &quot;Initialized new rat nest.&quot;.to_string()
+</span><span class="boring">        }
+</span><span class="boring">        &quot;commit&quot; =&gt; {
+</span><span class="boring">            let number = commit()?;
+</span><span class="boring">
+</span><span class="boring">            format!(&quot;Created commit number {number}.&quot;)
+</span><span class="boring">        }
+</span><span class="boring">        // An Err value followed by ? is effectively equivalent to an early
+</span><span class="boring">        // return, it simply more closely mirrors other error handling logic by
+</span><span class="boring">        // having a ?
+</span><span class="boring">        _ =&gt; Err(RatError::InvalidSubcommand)?,
+</span><span class="boring">    };
+</span><span class="boring">
+</span><span class="boring">    println!(&quot;{}&quot;, output);
+</span><span class="boring">
+</span><span class="boring">    // We need to explicitly return an empty Ok here, since our return value is
+</span><span class="boring">    // a Result, not a plain &quot;void&quot;.
+</span><span class="boring">    Ok(())
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">#[derive(Debug)]
+</span><span class="boring">enum RatError {
+</span><span class="boring">    NoSubcommand,
+</span><span class="boring">    InvalidSubcommand,
+</span><span class="boring">    FileError(io::Error),
+</span><span class="boring">    CommitError(RatCommitError),
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">impl Display for RatError {
+</span><span class="boring">    fn fmt(&amp;self, f: &amp;mut std::fmt::Formatter&lt;'_&gt;) -&gt; std::fmt::Result {
+</span><span class="boring">        match self {
+</span><span class="boring">            Self::NoSubcommand =&gt; write!(f, &quot;no subcommand provided&quot;),
+</span><span class="boring">            Self::InvalidSubcommand =&gt; write!(f, &quot;invalid subcommand&quot;),
+</span><span class="boring">            Self::FileError(e) =&gt; write!(f, &quot;file error: {e}&quot;),
+</span><span class="boring">            Self::CommitError(e) =&gt; write!(f, &quot;commit error: {e}&quot;),
+</span><span class="boring">        }
+</span><span class="boring">    }
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">impl Error for RatError {
+</span><span class="boring">    fn source(&amp;self) -&gt; Option&lt;&amp;(dyn Error + 'static)&gt; {
+</span><span class="boring">        match self {
+</span><span class="boring">            Self::FileError(e) =&gt; Some(e),
+</span><span class="boring">            Self::CommitError(e) =&gt; Some(e),
+</span><span class="boring">            _ =&gt; None,
+</span><span class="boring">        }
+</span><span class="boring">    }
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">impl From&lt;io::Error&gt; for RatError {
+</span><span class="boring">    fn from(error: io::Error) -&gt; Self {
+</span><span class="boring">        Self::FileError(error)
+</span><span class="boring">    }
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">impl From&lt;RatCommitError&gt; for RatError {
+</span><span class="boring">    fn from(error: RatCommitError) -&gt; Self {
+</span><span class="boring">        Self::CommitError(error)
+</span><span class="boring">    }
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">/// Initializes a new rat nest in the current directory.
+</span><span class="boring">fn init() -&gt; Result&lt;(), io::Error&gt; {
+</span><span class="boring">    fs::create_dir(RAT_NEST)?;
+</span><span class="boring">    fs::write(format!(&quot;{RAT_NEST}/HEAD&quot;), &quot;-1&quot;)?;
+</span><span class="boring">
+</span><span class="boring">    Ok(())
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">/// Commits the contents of the current directory to the nest.
+</span><span class="boring">fn commit() -&gt; Result&lt;i32, RatCommitError&gt; {
+</span><span class="boring">    let head_file = format!(&quot;{RAT_NEST}/HEAD&quot;);
+</span><span class="boring">
+</span><span class="boring">    // Read and parse the current HEAD file, containing a reference to the last
+</span><span class="boring">    // commit. The `parse` method on `String` has many possible outputs, so we
+</span><span class="boring">    // must clarify which one we need with an explicit type annotation.
+</span><span class="boring">    let head_string = fs::read_to_string(&amp;head_file)?;
+</span><span class="boring">    let head_number: i32 = head_string
+</span><span class="boring">        .parse()
+</span><span class="boring">        .map_err(|_| RatCommitError::InvalidHead)?;
+</span><span class="boring">
+</span><span class="boring">    let new_head_number = head_number + 1;
+</span><span class="boring">
+</span>    // Create a new directory for our new commit inside the nest.
+    let commit_dir = format!(&quot;{RAT_NEST}/commit-{new_head_number}&quot;);
+    fs::create_dir(&amp;commit_dir)?;
+
+    // Copy the current working directory into the commit directory, ignoring
+    // the nest itself.
+    utils::copy_dir_deep(env::current_dir()?, &amp;commit_dir, &amp;[RAT_NEST])?;
+
+    // Update the HEAD file with the new commit that we just created.
+    fs::write(head_file, new_head_number.to_string())?;
+<span class="boring">
+</span><span class="boring">    Ok(new_head_number)
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">#[derive(Debug)]
+</span><span class="boring">enum RatCommitError {
+</span><span class="boring">    FileError(io::Error),
+</span><span class="boring">    InvalidHead,
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">impl Display for RatCommitError {
+</span><span class="boring">    fn fmt(&amp;self, f: &amp;mut std::fmt::Formatter&lt;'_&gt;) -&gt; std::fmt::Result {
+</span><span class="boring">        match self {
+</span><span class="boring">            Self::FileError(e) =&gt; write!(f, &quot;file error: {e}&quot;),
+</span><span class="boring">            Self::InvalidHead =&gt; write!(f, &quot;couldn't parse invalid HEAD file&quot;),
+</span><span class="boring">        }
+</span><span class="boring">    }
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">impl Error for RatCommitError {
+</span><span class="boring">    fn source(&amp;self) -&gt; Option&lt;&amp;(dyn Error + 'static)&gt; {
+</span><span class="boring">        match self {
+</span><span class="boring">            Self::FileError(e) =&gt; Some(e),
+</span><span class="boring">            _ =&gt; None,
+</span><span class="boring">        }
+</span><span class="boring">    }
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">impl From&lt;io::Error&gt; for RatCommitError {
+</span><span class="boring">    fn from(error: io::Error) -&gt; Self {
+</span><span class="boring">        Self::FileError(error)
+</span><span class="boring">    }
+</span><span class="boring">}
+</span></code></pre>
+<p>However, you may notice that we need to know what the <code>new_head_number</code> is
+for this code to work. Each time we create a new commit, its ID has to come
+from the previous commit’s ID plus one. So we keep track of the “head”
+commit in a special file containing its ID. <em>Before</em> we can create a commit,
+then, we must read and parse that <code>HEAD</code> file, like so:</p>
+<pre><code class="language-rust"><span class="boring">use std::error::Error;
+</span><span class="boring">use std::fmt::Display;
+</span><span class="boring">use std::fs;
+</span><span class="boring">use std::{env, io};
+</span><span class="boring">
+</span><span class="boring">mod utils;
+</span><span class="boring">
+</span><span class="boring">const RAT_NEST: &amp;str = &quot;.rat&quot;;
+</span><span class="boring">
+</span><span class="boring">fn main() -&gt; Result&lt;(), RatError&gt; {
+</span><span class="boring">    let command_line_arguments: Vec&lt;String&gt; = env::args().collect();
+</span><span class="boring">
+</span><span class="boring">    let subcommand = command_line_arguments
+</span><span class="boring">        .get(1)
+</span><span class="boring">        .ok_or(RatError::NoSubcommand)?;
+</span><span class="boring">
+</span><span class="boring">    let output = match subcommand.as_str() {
+</span><span class="boring">        &quot;init&quot; =&gt; {
+</span><span class="boring">            init()?;
+</span><span class="boring">
+</span><span class="boring">            &quot;Initialized new rat nest.&quot;.to_string()
+</span><span class="boring">        }
+</span><span class="boring">        &quot;commit&quot; =&gt; {
+</span><span class="boring">            let number = commit()?;
+</span><span class="boring">
+</span><span class="boring">            format!(&quot;Created commit number {number}.&quot;)
+</span><span class="boring">        }
+</span><span class="boring">        // An Err value followed by ? is effectively equivalent to an early
+</span><span class="boring">        // return, it simply more closely mirrors other error handling logic by
+</span><span class="boring">        // having a ?
+</span><span class="boring">        _ =&gt; Err(RatError::InvalidSubcommand)?,
+</span><span class="boring">    };
+</span><span class="boring">
+</span><span class="boring">    println!(&quot;{}&quot;, output);
+</span><span class="boring">
+</span><span class="boring">    // We need to explicitly return an empty Ok here, since our return value is
+</span><span class="boring">    // a Result, not a plain &quot;void&quot;.
+</span><span class="boring">    Ok(())
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">#[derive(Debug)]
+</span><span class="boring">enum RatError {
+</span><span class="boring">    NoSubcommand,
+</span><span class="boring">    InvalidSubcommand,
+</span><span class="boring">    FileError(io::Error),
+</span><span class="boring">    CommitError(RatCommitError),
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">impl Display for RatError {
+</span><span class="boring">    fn fmt(&amp;self, f: &amp;mut std::fmt::Formatter&lt;'_&gt;) -&gt; std::fmt::Result {
+</span><span class="boring">        match self {
+</span><span class="boring">            Self::NoSubcommand =&gt; write!(f, &quot;no subcommand provided&quot;),
+</span><span class="boring">            Self::InvalidSubcommand =&gt; write!(f, &quot;invalid subcommand&quot;),
+</span><span class="boring">            Self::FileError(e) =&gt; write!(f, &quot;file error: {e}&quot;),
+</span><span class="boring">            Self::CommitError(e) =&gt; write!(f, &quot;commit error: {e}&quot;),
+</span><span class="boring">        }
+</span><span class="boring">    }
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">impl Error for RatError {
+</span><span class="boring">    fn source(&amp;self) -&gt; Option&lt;&amp;(dyn Error + 'static)&gt; {
+</span><span class="boring">        match self {
+</span><span class="boring">            Self::FileError(e) =&gt; Some(e),
+</span><span class="boring">            Self::CommitError(e) =&gt; Some(e),
+</span><span class="boring">            _ =&gt; None,
+</span><span class="boring">        }
+</span><span class="boring">    }
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">impl From&lt;io::Error&gt; for RatError {
+</span><span class="boring">    fn from(error: io::Error) -&gt; Self {
+</span><span class="boring">        Self::FileError(error)
+</span><span class="boring">    }
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">impl From&lt;RatCommitError&gt; for RatError {
+</span><span class="boring">    fn from(error: RatCommitError) -&gt; Self {
+</span><span class="boring">        Self::CommitError(error)
+</span><span class="boring">    }
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">/// Initializes a new rat nest in the current directory.
+</span><span class="boring">fn init() -&gt; Result&lt;(), io::Error&gt; {
+</span><span class="boring">    fs::create_dir(RAT_NEST)?;
+</span><span class="boring">    fs::write(format!(&quot;{RAT_NEST}/HEAD&quot;), &quot;-1&quot;)?;
+</span><span class="boring">
+</span><span class="boring">    Ok(())
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">/// Commits the contents of the current directory to the nest.
+</span><span class="boring">fn commit() -&gt; Result&lt;i32, RatCommitError&gt; {
+</span>    let head_file = format!(&quot;{RAT_NEST}/HEAD&quot;);
+
+    // Read and parse the current HEAD file, containing a reference to the last
+    // commit. The `parse` method on `String` has many possible outputs, so we
+    // must clarify which one we need with an explicit type annotation.
+    let head_string = fs::read_to_string(&amp;head_file)?;
+    let head_number: i32 = head_string
+        .parse()
+        .map_err(|_| RatCommitError::InvalidHead)?;
+
+    let new_head_number = head_number + 1;
+<span class="boring">
+</span><span class="boring">    // Create a new directory for our new commit inside the nest.
+</span><span class="boring">    let commit_dir = format!(&quot;{RAT_NEST}/commit-{new_head_number}&quot;);
+</span><span class="boring">    fs::create_dir(&amp;commit_dir)?;
+</span><span class="boring">
+</span><span class="boring">    // Copy the current working directory into the commit directory, ignoring
+</span><span class="boring">    // the nest itself.
+</span><span class="boring">    utils::copy_dir_deep(env::current_dir()?, &amp;commit_dir, &amp;[RAT_NEST])?;
+</span><span class="boring">
+</span><span class="boring">    // Update the HEAD file with the new commit that we just created.
+</span><span class="boring">    fs::write(head_file, new_head_number.to_string())?;
+</span><span class="boring">
+</span><span class="boring">    Ok(new_head_number)
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">#[derive(Debug)]
+</span><span class="boring">enum RatCommitError {
+</span><span class="boring">    FileError(io::Error),
+</span><span class="boring">    InvalidHead,
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">impl Display for RatCommitError {
+</span><span class="boring">    fn fmt(&amp;self, f: &amp;mut std::fmt::Formatter&lt;'_&gt;) -&gt; std::fmt::Result {
+</span><span class="boring">        match self {
+</span><span class="boring">            Self::FileError(e) =&gt; write!(f, &quot;file error: {e}&quot;),
+</span><span class="boring">            Self::InvalidHead =&gt; write!(f, &quot;couldn't parse invalid HEAD file&quot;),
+</span><span class="boring">        }
+</span><span class="boring">    }
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">impl Error for RatCommitError {
+</span><span class="boring">    fn source(&amp;self) -&gt; Option&lt;&amp;(dyn Error + 'static)&gt; {
+</span><span class="boring">        match self {
+</span><span class="boring">            Self::FileError(e) =&gt; Some(e),
+</span><span class="boring">            _ =&gt; None,
+</span><span class="boring">        }
+</span><span class="boring">    }
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">impl From&lt;io::Error&gt; for RatCommitError {
+</span><span class="boring">    fn from(error: io::Error) -&gt; Self {
+</span><span class="boring">        Self::FileError(error)
+</span><span class="boring">    }
+</span><span class="boring">}
+</span></code></pre>
+<h2 id="init"><a class="header" href="#init">Init</a></h2>
+<p>Based on this simple <code>commit</code> function, what we need to initialize in <code>init</code>
+becomes quite obvious.</p>
+<pre><code class="language-rust">{# use std::error::Error;
+<span class="boring">use std::fmt::Display;
+</span><span class="boring">use std::fs;
+</span><span class="boring">use std::{env, io};
+</span><span class="boring">
+</span><span class="boring">mod utils;
+</span><span class="boring">
+</span><span class="boring">const RAT_NEST: &amp;str = &quot;.rat&quot;;
+</span><span class="boring">
+</span><span class="boring">fn main() -&gt; Result&lt;(), RatError&gt; {
+</span><span class="boring">    let command_line_arguments: Vec&lt;String&gt; = env::args().collect();
+</span><span class="boring">
+</span><span class="boring">    let subcommand = command_line_arguments
+</span><span class="boring">        .get(1)
+</span><span class="boring">        .ok_or(RatError::NoSubcommand)?;
+</span><span class="boring">
+</span><span class="boring">    let output = match subcommand.as_str() {
+</span><span class="boring">        &quot;init&quot; =&gt; {
+</span><span class="boring">            init()?;
+</span><span class="boring">
+</span><span class="boring">            &quot;Initialized new rat nest.&quot;.to_string()
+</span><span class="boring">        }
+</span><span class="boring">        &quot;commit&quot; =&gt; {
+</span><span class="boring">            let number = commit()?;
+</span><span class="boring">
+</span><span class="boring">            format!(&quot;Created commit number {number}.&quot;)
+</span><span class="boring">        }
+</span><span class="boring">        // An Err value followed by ? is effectively equivalent to an early
+</span><span class="boring">        // return, it simply more closely mirrors other error handling logic by
+</span><span class="boring">        // having a ?
+</span><span class="boring">        _ =&gt; Err(RatError::InvalidSubcommand)?,
+</span><span class="boring">    };
+</span><span class="boring">
+</span><span class="boring">    println!(&quot;{}&quot;, output);
+</span><span class="boring">
+</span><span class="boring">    // We need to explicitly return an empty Ok here, since our return value is
+</span><span class="boring">    // a Result, not a plain &quot;void&quot;.
+</span><span class="boring">    Ok(())
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">#[derive(Debug)]
+</span><span class="boring">enum RatError {
+</span><span class="boring">    NoSubcommand,
+</span><span class="boring">    InvalidSubcommand,
+</span><span class="boring">    FileError(io::Error),
+</span><span class="boring">    CommitError(RatCommitError),
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">impl Display for RatError {
+</span><span class="boring">    fn fmt(&amp;self, f: &amp;mut std::fmt::Formatter&lt;'_&gt;) -&gt; std::fmt::Result {
+</span><span class="boring">        match self {
+</span><span class="boring">            Self::NoSubcommand =&gt; write!(f, &quot;no subcommand provided&quot;),
+</span><span class="boring">            Self::InvalidSubcommand =&gt; write!(f, &quot;invalid subcommand&quot;),
+</span><span class="boring">            Self::FileError(e) =&gt; write!(f, &quot;file error: {e}&quot;),
+</span><span class="boring">            Self::CommitError(e) =&gt; write!(f, &quot;commit error: {e}&quot;),
+</span><span class="boring">        }
+</span><span class="boring">    }
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">impl Error for RatError {
+</span><span class="boring">    fn source(&amp;self) -&gt; Option&lt;&amp;(dyn Error + 'static)&gt; {
+</span><span class="boring">        match self {
+</span><span class="boring">            Self::FileError(e) =&gt; Some(e),
+</span><span class="boring">            Self::CommitError(e) =&gt; Some(e),
+</span><span class="boring">            _ =&gt; None,
+</span><span class="boring">        }
+</span><span class="boring">    }
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">impl From&lt;io::Error&gt; for RatError {
+</span><span class="boring">    fn from(error: io::Error) -&gt; Self {
+</span><span class="boring">        Self::FileError(error)
+</span><span class="boring">    }
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">impl From&lt;RatCommitError&gt; for RatError {
+</span><span class="boring">    fn from(error: RatCommitError) -&gt; Self {
+</span><span class="boring">        Self::CommitError(error)
+</span><span class="boring">    }
+</span><span class="boring">}
+</span><span class="boring">
+</span>/// Initializes a new rat nest in the current directory.
+fn init() -&gt; Result&lt;(), io::Error&gt; {
+    fs::create_dir(RAT_NEST)?;
+    fs::write(format!(&quot;{RAT_NEST}/HEAD&quot;), &quot;-1&quot;)?;
+
+    Ok(())
+}
+<span class="boring">
+</span><span class="boring">/// Commits the contents of the current directory to the nest.
+</span><span class="boring">fn commit() -&gt; Result&lt;i32, RatCommitError&gt; {
+</span><span class="boring">    let head_file = format!(&quot;{RAT_NEST}/HEAD&quot;);
+</span><span class="boring">
+</span><span class="boring">    // Read and parse the current HEAD file, containing a reference to the last
+</span><span class="boring">    // commit. The `parse` method on `String` has many possible outputs, so we
+</span><span class="boring">    // must clarify which one we need with an explicit type annotation.
+</span><span class="boring">    let head_string = fs::read_to_string(&amp;head_file)?;
+</span><span class="boring">    let head_number: i32 = head_string
+</span><span class="boring">        .parse()
+</span><span class="boring">        .map_err(|_| RatCommitError::InvalidHead)?;
+</span><span class="boring">
+</span><span class="boring">    let new_head_number = head_number + 1;
+</span><span class="boring">
+</span><span class="boring">    // Create a new directory for our new commit inside the nest.
+</span><span class="boring">    let commit_dir = format!(&quot;{RAT_NEST}/commit-{new_head_number}&quot;);
+</span><span class="boring">    fs::create_dir(&amp;commit_dir)?;
+</span><span class="boring">
+</span><span class="boring">    // Copy the current working directory into the commit directory, ignoring
+</span><span class="boring">    // the nest itself.
+</span><span class="boring">    utils::copy_dir_deep(env::current_dir()?, &amp;commit_dir, &amp;[RAT_NEST])?;
+</span><span class="boring">
+</span><span class="boring">    // Update the HEAD file with the new commit that we just created.
+</span><span class="boring">    fs::write(head_file, new_head_number.to_string())?;
+</span><span class="boring">
+</span><span class="boring">    Ok(new_head_number)
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">#[derive(Debug)]
+</span><span class="boring">enum RatCommitError {
+</span><span class="boring">    FileError(io::Error),
+</span><span class="boring">    InvalidHead,
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">impl Display for RatCommitError {
+</span><span class="boring">    fn fmt(&amp;self, f: &amp;mut std::fmt::Formatter&lt;'_&gt;) -&gt; std::fmt::Result {
+</span><span class="boring">        match self {
+</span><span class="boring">            Self::FileError(e) =&gt; write!(f, &quot;file error: {e}&quot;),
+</span><span class="boring">            Self::InvalidHead =&gt; write!(f, &quot;couldn't parse invalid HEAD file&quot;),
+</span><span class="boring">        }
+</span><span class="boring">    }
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">impl Error for RatCommitError {
+</span><span class="boring">    fn source(&amp;self) -&gt; Option&lt;&amp;(dyn Error + 'static)&gt; {
+</span><span class="boring">        match self {
+</span><span class="boring">            Self::FileError(e) =&gt; Some(e),
+</span><span class="boring">            _ =&gt; None,
+</span><span class="boring">        }
+</span><span class="boring">    }
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">impl From&lt;io::Error&gt; for RatCommitError {
+</span><span class="boring">    fn from(error: io::Error) -&gt; Self {
+</span><span class="boring">        Self::FileError(error)
+</span><span class="boring">    }
+</span><span class="boring">}
+</span></code></pre>
+<h2 id="nest-structure-summary"><a class="header" href="#nest-structure-summary">Nest Structure Summary</a></h2>
+<p>Here’s an example that would be generated by 2 commits in a nest containing only
+a single file. In this case, <code>HEAD</code> would only contain the value <code>2</code>.</p>
+<pre><code>thesis/
+    .rat/
+        HEAD
+        commit-0/
+            thesis.latex
+        commit-1/
+            thesis.latex
+    thesis.latex
+</code></pre>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="next" href="0.2-hashes/index.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="next" href="0.2-hashes/index.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+    </body>
+</html>
